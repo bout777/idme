@@ -1,16 +1,16 @@
 spring:
     application:
-        name:idme
+        name: idme
 
 delegate:
-    subAppId:rdm_2485d6e3cbf74c538c89c46777250db7_app
-    domain:https://dme.cn-north-4.huaweicloud.com
-    domainName:hid_orv39vyurm0i1ng
-    userName:jt
-    password:scut2024
-    endpoint:https://iam.cn-north-4.myhuaweicloud.com
-    regionName:cn-north-4
-    serviceType:services/dynamic
+    subAppId: rdm_2485d6e3cbf74c538c89c46777250db7_app
+    domain: https://dme.cn-north-4.huaweicloud.com
+    domainName: hid_orv39vyurm0i1ng
+    userName: jt
+    password: scut2024
+    endpoint: https://iam.cn-north-4.myhuaweicloud.com
+    regionName: cn-north-4
+    serviceType: services/dynamic
 
 jwt:
     secret-key: idme2025
