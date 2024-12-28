@@ -127,6 +127,11 @@
             <artifactId>jjwt</artifactId>
             <version>0.9.1</version> <!-- 使用最新版本 -->
         </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.7.0</version> <!-- 请检查最新版本 -->
+        </dependency>
     </dependencies>
 
     <build>

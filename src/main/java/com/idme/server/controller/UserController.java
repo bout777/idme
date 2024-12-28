@@ -5,6 +5,8 @@
 package com.idme.server.controller;
 
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.UserDelegator;
+import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.UserViewDTO;
+import com.idme.common.properties.JwtProperties;
 import com.idme.common.result.Result;
 import com.idme.common.utils.JwtUtil;
 import com.idme.pojo.dto.UserLoginDTO;
@@ -14,6 +16,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
@@ -29,14 +32,28 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService userService;
-//    Result<UserLoginVO> login(@RequestBody UserLoginDTO loginForm){
-//        UserLoginVO userLoginVO = userService.userLogin(loginForm);
-//
-//        Map<String, Object> claims = new HashMap<>();
-//        claims.put("userId", admin.getId());
-//        String token = JwtUtil.createJWT(jwtProperties.getAdminSecretKey(), jwtProperties.getAdminTtl(), claims);
-//        AdminLoginVO loginVO = AdminLoginVO.builder().token(token).id(admin.getId()).build();
-//        return Result.success(loginVO);
-//    };
+
+    @Autowired
+    JwtProperties jwtProperties;
+    Result<UserLoginVO> login(@RequestBody UserLoginDTO loginForm){
+        UserViewDTO user = userService.userLogin(loginForm);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("userId", user.getId());
+        String token = JwtUtil.createJWT(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
+        UserLoginVO loginVO = UserLoginVO.builder()
+                .token(token)
+                .id(user.getId())
+                .authority(user.getAuthority())
+                .build();
+        return Result.success(loginVO);
+    };
+
+    Result register(@RequestBody UserLoginDTO registerForm){
+        userService.register(registerForm);
+        return Result.success();
+    }
+
+
 }
 

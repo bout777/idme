@@ -1,4 +1,4 @@
-package com.idme.pojo.vo;
+package com.idme.pojo.entity;
 
 import com.huawei.innovation.rdm.intelligentrobotengineering.bean.enumerate.Authority;
 import lombok.AllArgsConstructor;
@@ -6,14 +6,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginVO implements Serializable {
-    private Long id;
-    private String token;
-    private Authority authority;
+public class User {
+    Long id;
+    Authority authority;
+    String name;
+    String user_password;
+    String phone;
 }
