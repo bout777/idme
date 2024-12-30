@@ -14,6 +14,6 @@ public class User {
     Long id;
     Authority authority;
     String name;
-    String user_password;
+    String user_Password;
     String phone;
 }
