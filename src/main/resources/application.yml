@@ -16,3 +16,6 @@ jwt:
     secret-key: idme2025
     ttl: 7200000
     token-name: token
+
+server:
+    port: 8080
