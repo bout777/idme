@@ -13,11 +13,13 @@ import com.huawei.innovation.rdm.xdm.dto.entity.EXADefinitionListViewDTO;
 import com.huawei.innovation.rdm.xdm.dto.entity.EXADefinitionViewDTO;
 import com.huawei.innovation.rdm.xdm.dto.relation.EXADefinitionLinkListViewDTO;
 import com.huawei.innovation.rdm.xdm.dto.relation.EXADefinitionLinkViewDTO;
+import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.server.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.UserDelegator;
+import com.idme.pojo.entity.User;
 
 import java.util.List;
 
@@ -39,30 +41,20 @@ class IdmeApplicationTests {
     private EXADefinitionLinkDelegator exaDefinitionLinkDelegator;
 
     @Test
-    void contextLoads() {
-        UserCreateDTO  userCreateDTO = new UserCreateDTO();
-        userCreateDTO.setName("test");
-        userCreateDTO.setAuthority(Authority.Normal);
-        userDelegator.create(userCreateDTO);
+    void userInsertTest() {
+        User user = User.builder().name("testUser5").build();
+        userMapper.insert(user);
     }
 
     @Test
-    void contextLoads2() {
-        userMapper.getByName("test");
+    void userGetTest() {
+        System.out.println(userMapper.getByName("test"));
     }
 
-//    @Test
-//    void contextLoads3() {
-//        long count = classificationNodeDelegator.count(new QueryRequestVo());
-//        System.out.println(count);
-//
-//        List<ClassificationNodeViewDTO> dtos = classificationNodeDelegator.find(new QueryRequestVo(), new RDMPageVO());
-//        System.out.println(dtos);
-//        Long id = dtos.get(0).getId();
-//        exaDefinitionLinkDelegator
-//
-//
-//
-//    }
+    @Test
+    void UserPageTest() {
+        List<User> users = userMapper.pageUser(SearchQueryDTO.builder().page(1).pageSize(10).build());
+        System.out.println(users);
+    }
 
 }
