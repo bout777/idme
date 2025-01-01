@@ -1,10 +1,11 @@
 package com.idme.common.utils;
 
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
 import com.idme.pojo.dto.SearchQueryDTO;
-import com.idme.pojo.entity.Part;
 import org.apache.commons.beanutils.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -27,7 +28,21 @@ public class CommonUtil {
         return p;
     }
 
+    public static PersistObjectIdDecryptDTO fetchIdConvert(Long id){
+        PersistObjectIdDecryptDTO p = new PersistObjectIdDecryptDTO();
+        p.setId(id);
+        return p;
+    }
+
+    public static PersistObjectIdModifierDTO deleteIdConvert(Long id){
+        PersistObjectIdModifierDTO p = new PersistObjectIdModifierDTO();
+        p.setId(id);
+        return p;
+    }
+
     public static <S,T> T resConvert(S source, Class<T> targetClazz){
+        if(source == null)
+            return null;
         try {
             T target = targetClazz.newInstance();
             BeanUtils.copyProperties(target, source);
@@ -38,6 +53,8 @@ public class CommonUtil {
     }
 
     public static <S,T> List<T> ListResConvert(List<S> source, Class<T> clazz) {
+        if(source == null)
+            return null;
         return source.stream().map(s_item -> {
             T t_item = null;
             try {
@@ -53,4 +70,5 @@ public class CommonUtil {
             return t_item;
         }).toList();
     }
+
 }

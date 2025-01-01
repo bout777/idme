@@ -1,6 +1,7 @@
 package com.idme.server.controller;
 
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.PartDelegator;
+import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.PartUpdateByAdminDTO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.PartUpdateDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +15,7 @@ public class PartController {
     PartDelegator partDelegator;
 
     @PostMapping("/update")
-    public void update(@RequestBody PartUpdateDTO p){
-        partDelegator.update(p);
+    public void update(@RequestBody PartUpdateByAdminDTO p){
+        partDelegator.updateByAdmin(p);
     }
 }

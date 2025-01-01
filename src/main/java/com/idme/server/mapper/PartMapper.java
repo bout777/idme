@@ -6,6 +6,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.huawei.innovation.rdm.coresdk.basic.dto.MasterIdModifierDTO;
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDTO;
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
@@ -45,6 +49,12 @@ public class PartMapper {
         partDelegator.updateByAdmin(partUpdateDTO);
     }
 
+    public void delete(Long id){
+        MasterIdModifierDTO obj = new MasterIdModifierDTO();
+        obj.setMasterId(id);
+        partDelegator.delete(obj);
+    }
+
     public List<Part> pagePart(SearchQueryDTO query){
         QueryRequestVo q = CommonUtil.queryConvert(query);
         RDMPageVO p = CommonUtil.pageConvert(query);
@@ -52,8 +62,11 @@ public class PartMapper {
         List<PartViewDTO> list = partDelegator.find(q, p);
 
         List<Part> res = CommonUtil.ListResConvert(list, Part.class);
-
         return res;
+    }
+
+    public Long count(SearchQueryDTO query){
+        return partDelegator.count(CommonUtil.queryConvert(query));
     }
 
 }

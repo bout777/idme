@@ -47,8 +47,7 @@ public class UserMapper {
 
         List<UserViewDTO> list = userDelegator.find(q, p);
 
-        List<User> res = CommonUtil.ListResConvert(list, User.class);
-        return res;
+        return CommonUtil.ListResConvert(list, User.class);
     }
 
     public void insert(User user){
