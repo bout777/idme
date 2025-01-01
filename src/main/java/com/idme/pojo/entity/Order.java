@@ -7,13 +7,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Order {
     Long id;
+    //对应产品名称
     private String name;
+    //产品数量
     private String quantity;
     private Timestamp orderDate;
     private SourceType type;

@@ -4,20 +4,19 @@
 
 package com.idme.server.controller;
 
-import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.UserDelegator;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.UserViewDTO;
+import com.idme.common.constant.JwtConstant;
 import com.idme.common.properties.JwtProperties;
+import com.idme.common.result.PageResult;
 import com.idme.common.result.Result;
 import com.idme.common.utils.JwtUtil;
-import com.idme.pojo.dto.UserLoginDTO;
+import com.idme.pojo.dto.SearchQueryDTO;
+import com.idme.pojo.dto.UserFormDTO;
+import com.idme.pojo.entity.User;
 import com.idme.pojo.vo.UserLoginVO;
 import com.idme.server.service.UserService;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,11 +34,14 @@ public class UserController {
 
     @Autowired
     JwtProperties jwtProperties;
-    Result<UserLoginVO> login(@RequestBody UserLoginDTO loginForm){
-        UserViewDTO user = userService.userLogin(loginForm);
+
+    @PostMapping("/login")
+    Result<UserLoginVO> login(@RequestBody UserFormDTO loginForm) {
+        User user = userService.userLogin(loginForm);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("userId", user.getId());
+        claims.put(JwtConstant.USER_ID, user.getId());
+        claims.put(JwtConstant.USER_AUTHORITY, user.getAuthority());
         String token = JwtUtil.createJWT(jwtProperties.getSecretKey(), jwtProperties.getTtl(), claims);
         UserLoginVO loginVO = UserLoginVO.builder()
                 .token(token)
@@ -47,13 +49,26 @@ public class UserController {
                 .authority(user.getAuthority())
                 .build();
         return Result.success(loginVO);
-    };
-
-    Result register(@RequestBody UserLoginDTO registerForm){
-        userService.register(registerForm);
-        return Result.success();
     }
 
+    ;
+
+    @PostMapping("/insert")
+    public void insert(@RequestBody User user) {
+        userService.insert(user);
+    }
+
+    @PostMapping("/page")
+    public Result<PageResult> page(@RequestBody SearchQueryDTO query) {
+        PageResult pageResult = userService.pageUser(query);
+        return Result.success(pageResult);
+    }
+
+    @GetMapping("/getById/{id}")
+    public Result<User> getById(@PathVariable Long id) {
+        User user = userService.getById(id);
+        return Result.success(user);
+    }
 
 }
 

@@ -6,6 +6,6 @@ import java.io.Serializable;
 
 @Data
 public class DownloadQueryDTO implements Serializable {
-    String  fileId;
-    String  DesignBlueprintId;
+    String fileId;
+    String DesignBlueprintId;
 }

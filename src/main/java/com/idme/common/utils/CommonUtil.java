@@ -1,5 +1,6 @@
 package com.idme.common.utils;
 
+import com.huawei.innovation.rdm.coresdk.basic.dto.ObjectReferenceParamDTO;
 import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
 import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
@@ -12,36 +13,42 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class CommonUtil {
-    public static QueryRequestVo queryConvert(SearchQueryDTO query){
+    public static QueryRequestVo queryConvert(SearchQueryDTO query) {
         QueryRequestVo q = QueryRequestVo.build();
-        if(query.getId()!=null)
+        if (query.getId() != null)
             q.addCondition("id", ConditionType.EQUAL, query.getId());
-        if(query.getName()!=null)
-            q.addCondition("name", ConditionType.LIKE,'%'+query.getName()+'%');
+        else if (query.getName() != null)
+            q.addCondition("name", ConditionType.LIKE, '%' + query.getName() + '%');
         return q;
     }
 
-    public static RDMPageVO pageConvert(SearchQueryDTO query){
+    public static RDMPageVO pageConvert(SearchQueryDTO query) {
         RDMPageVO p = new RDMPageVO();
         p.setCurPage(query.getPage());
         p.setPageSize(query.getPageSize());
         return p;
     }
 
-    public static PersistObjectIdDecryptDTO fetchIdConvert(Long id){
+    public static PersistObjectIdDecryptDTO fetchIdConvert(Long id) {
         PersistObjectIdDecryptDTO p = new PersistObjectIdDecryptDTO();
         p.setId(id);
         return p;
     }
 
-    public static PersistObjectIdModifierDTO deleteIdConvert(Long id){
+    public static PersistObjectIdModifierDTO deleteIdConvert(Long id) {
         PersistObjectIdModifierDTO p = new PersistObjectIdModifierDTO();
         p.setId(id);
         return p;
     }
 
-    public static <S,T> T resConvert(S source, Class<T> targetClazz){
-        if(source == null)
+    public static ObjectReferenceParamDTO linkIdConvert(Long id) {
+        ObjectReferenceParamDTO o = new ObjectReferenceParamDTO();
+        o.setId(id);
+        return o;
+    }
+
+    public static <S, T> T resConvert(S source, Class<T> targetClazz) {
+        if (source == null)
             return null;
         try {
             T target = targetClazz.newInstance();
@@ -52,8 +59,8 @@ public class CommonUtil {
         }
     }
 
-    public static <S,T> List<T> ListResConvert(List<S> source, Class<T> clazz) {
-        if(source == null)
+    public static <S, T> List<T> ListResConvert(List<S> source, Class<T> clazz) {
+        if (source == null || source.isEmpty())
             return null;
         return source.stream().map(s_item -> {
             T t_item = null;

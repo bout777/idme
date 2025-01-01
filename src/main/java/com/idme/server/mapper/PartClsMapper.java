@@ -27,11 +27,12 @@ public class PartClsMapper {
     private EXADefinitionDelegator exaDefinitionDelegator;
     @Autowired
     private EXADefinitionLinkDelegator exaDefinitionLinkDelegator;
-    public Long getTotalCount(){
+
+    public Long getTotalCount() {
         return classificationNodeDelegator.count(new QueryRequestVo());
     }
 
-    public List<PartClsDefinition> getAllClsDefs(){
+    public List<PartClsDefinition> getAllClsDefs() {
         //用于传入函数的空查询请求
         QueryRequestVo q = QueryRequestVo.build();
         RDMPageVO p = new RDMPageVO();
@@ -50,18 +51,18 @@ public class PartClsMapper {
 
         //建立属性id->属性的映射
         HashMap<Long, PartAttrDefinition> attrMap = new HashMap<>();
-        for (EXADefinitionViewDTO e:list){
+        for (EXADefinitionViewDTO e : list) {
             attrMap.put(e.getId(), PartAttrDefinition.builder().name(e.getName()).enName(e.getNameEn()).build());
         }
 
         //建立分类id->属性列表的映射
-        HashMap <Long, List<PartAttrDefinition>> attrLinkMap = new HashMap<>();
-        for (EXADefinitionLinkViewDTO l:linkList){
+        HashMap<Long, List<PartAttrDefinition>> attrLinkMap = new HashMap<>();
+        for (EXADefinitionLinkViewDTO l : linkList) {
             Long attrId = l.getSource().getId();
             Long clsId = l.getTarget().getId();
-            if (attrLinkMap.containsKey(clsId)){
+            if (attrLinkMap.containsKey(clsId)) {
                 attrLinkMap.get(clsId).add(attrMap.get(attrId));
-            }else{
+            } else {
                 List<PartAttrDefinition> ls = new ArrayList<>();
                 ls.add(attrMap.get(attrId));
                 attrLinkMap.put(clsId, ls);
@@ -75,8 +76,8 @@ public class PartClsMapper {
         }).toList();
 
         //填入属性列表
-        for (PartClsDefinition c:res){
-            if (attrLinkMap.containsKey(c.getId())){
+        for (PartClsDefinition c : res) {
+            if (attrLinkMap.containsKey(c.getId())) {
                 c.setAttrDefs(attrLinkMap.get(c.getId()));
             }
         }

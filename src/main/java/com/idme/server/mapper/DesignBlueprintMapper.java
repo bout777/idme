@@ -22,13 +22,15 @@ import java.util.List;
 public class DesignBlueprintMapper {
     @Autowired
     private DesignBlueprintDelegator designBlueprintDelegator;
-    public void insert(DesignBlueprint designBlueprint){
+
+    public Long insert(DesignBlueprint designBlueprint) {
         DesignBlueprintCreateDTO dto = new DesignBlueprintCreateDTO();
 
         dto.setBuleprintDescription(designBlueprint.getBlueprintDescription());
         List<XDMFileModel> list = CommonUtil.ListResConvert(designBlueprint.getBluePrint(), XDMFileModel.class);
         dto.setBluePrint(list);
-        designBlueprintDelegator.create(dto);
+        DesignBlueprintViewDTO viewDTO = designBlueprintDelegator.create(dto);
+        return viewDTO.getId();
     }
 
     public DesignBlueprint getById(Long id) {
@@ -45,11 +47,11 @@ public class DesignBlueprintMapper {
         return res;
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         designBlueprintDelegator.delete(CommonUtil.deleteIdConvert(id));
     }
 
-    public void update(DesignBlueprint designBlueprint){
+    public void update(DesignBlueprint designBlueprint) {
         //后期尝试用Convert工具封装
         DesignBlueprintUpdateDTO dto = new DesignBlueprintUpdateDTO();
         dto.setId(designBlueprint.getId());
@@ -61,7 +63,7 @@ public class DesignBlueprintMapper {
         designBlueprintDelegator.update(dto);
     }
 
-    public List<DesignBlueprint> pageDesignBlueprints(SearchQueryDTO query){
+    public List<DesignBlueprint> pageDesignBlueprints(SearchQueryDTO query) {
         QueryRequestVo q = CommonUtil.queryConvert(query);
         RDMPageVO p = CommonUtil.pageConvert(query);
         List<DesignBlueprintViewDTO> viewList = designBlueprintDelegator.find(q, p);
@@ -81,15 +83,14 @@ public class DesignBlueprintMapper {
     }
 
 
-
-    private XDMFileModel convert(DesignBlueprint.BluePrint source){
+    private XDMFileModel convert(DesignBlueprint.BluePrint source) {
         XDMFileModel xdmFileModel = new XDMFileModel();
         xdmFileModel.setName(source.getName());
         xdmFileModel.setId(source.getId());
         return xdmFileModel;
     }
 
-    private DesignBlueprint.BluePrint convert(XDMFileModelViewDTO source){
+    private DesignBlueprint.BluePrint convert(XDMFileModelViewDTO source) {
         DesignBlueprint.BluePrint bluePrint = DesignBlueprint.BluePrint.builder()
                 .name(source.getName())
                 .id(source.getId())

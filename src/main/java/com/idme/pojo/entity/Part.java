@@ -12,10 +12,12 @@ public class Part implements Serializable {
     private String description;
     private String partName;
     private PartCls Cls;
+
     @Data
     public static class PartCls {
         private String name;
         private List<PartAttr> attrs;
+
         @Data
         public static class PartAttr {
             private String name;

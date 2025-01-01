@@ -1,35 +1,48 @@
 package com.idme.server.service;
 
 import com.huawei.iit.sdk.common.vo.file.UploadFileModelVO;
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdsModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
+import com.huawei.innovation.rdm.coresdk.basic.vo.RDMParamVO;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMResultVO;
 import com.huawei.innovation.rdm.delegate.service.FileDelegatorService;
+import com.idme.common.constant.MessageConstant;
+import com.idme.common.exception.BaseException;
+import com.idme.common.result.PageResult;
 import com.idme.common.result.Result;
+import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.DesignBlueprint;
+import com.idme.pojo.relation.ProductBlueprintLink;
 import com.idme.server.mapper.DesignBlueprintMapper;
+import com.idme.server.mapper.ProductBlueprintLinkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.UUID;
+import java.util.List;
 
 @Service
 public class DesignBlueprintService {
+    @Value("${delegate.subAppId}")
+    private String appId;
     @Autowired
-    private  FileDelegatorService fileDelegatorService;
+    private FileDelegatorService fileDelegatorService;
     @Autowired
     private DesignBlueprintMapper designBlueprintMapper;
-    public DesignBlueprint.BluePrint uploadBluePrint(MultipartFile file, String DesignBlueprintId){
+    @Autowired
+    private ProductBlueprintLinkMapper productBlueprintLinkMapper;
+
+    public DesignBlueprint.BluePrint uploadBluePrint(MultipartFile file, String DesignBlueprintId) {
         UploadFileModelVO uploadFileModelVO = new UploadFileModelVO();
 
-//        String id = UUID.randomUUID().toString();
         uploadFileModelVO.setInstanceId(DesignBlueprintId);
         uploadFileModelVO.setFile(file);
         uploadFileModelVO.setModelNumber("DM02981723");
         uploadFileModelVO.setModelName("DesignBlueprint");
         uploadFileModelVO.setAttributeName("bluePrint");
-        uploadFileModelVO.setApplicationId("rdm_2485d6e3cbf74c538c89c46777250db7_app");
+        uploadFileModelVO.setApplicationId(appId);
         uploadFileModelVO.setUsername("jt");
         uploadFileModelVO.setEncrypted(false);
         uploadFileModelVO.setStorageType(0);
@@ -48,11 +61,56 @@ public class DesignBlueprintService {
                 .build();
 
         DesignBlueprint designBlueprint = designBlueprintMapper.getById(Long.valueOf(DesignBlueprintId));
-        if(designBlueprint.getBluePrint()==null)
+        if (designBlueprint.getBluePrint() == null)
             designBlueprint.setBluePrint(new ArrayList<>());
         designBlueprint.getBluePrint().add(bluePrint);
         designBlueprintMapper.update(designBlueprint);
 
         return bluePrint;
     }
+
+    public Long insert(DesignBlueprint designBlueprint) {
+        return designBlueprintMapper.insert(designBlueprint);
+    }
+
+    public DesignBlueprint getById(Long id) {
+        return designBlueprintMapper.getById(id);
+    }
+
+    public void delete(Long id) {
+        List<ProductBlueprintLink> links = productBlueprintLinkMapper.getByBlueprintId(id);
+        if (links != null)
+            throw new BaseException(MessageConstant.CANNOT_DELETE);
+        DesignBlueprint b = designBlueprintMapper.getById(id);
+        List<DesignBlueprint.BluePrint> list = b.getBluePrint();
+        list.forEach(item-> deleteFile(item.getId()));
+        designBlueprintMapper.delete(id);
+    }
+
+    public void deleteFile(Long id){
+        RDMParamVO<PersistObjectIdsModifierDTO> paramVO = new RDMParamVO<>();
+        PersistObjectIdsModifierDTO ids = new PersistObjectIdsModifierDTO();
+        List<Long>list = new ArrayList<>();
+        list.add(id);
+        ids.setIds(list);
+        paramVO.setParams(ids);
+        paramVO.setApplicationId(appId);
+        fileDelegatorService.batchDelete(paramVO);
+    }
+
+    public PageResult pageDesignBlueprint(SearchQueryDTO query) {
+        List<DesignBlueprint> record = designBlueprintMapper.pageDesignBlueprints(query);
+        Long total = designBlueprintMapper.count(query);
+
+        return PageResult.builder()
+                .total(total)
+                .records(record)
+                .build();
+    }
+
+    public void update(DesignBlueprint designBlueprint) {
+        designBlueprintMapper.update(designBlueprint);
+    }
+
+
 }

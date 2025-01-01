@@ -22,17 +22,12 @@ public class OrderMapper {
     private OrderDelegator orderDelegator;
 
     public Order getById(Long id) {
-        PersistObjectIdDecryptDTO o = new PersistObjectIdDecryptDTO();
-        o.setId(id);
-        OrderViewDTO orderView = orderDelegator.get(o);
-
+        OrderViewDTO orderView = orderDelegator.get(CommonUtil.fetchIdConvert(id));
         return CommonUtil.resConvert(orderView, Order.class);
     }
 
     public void delete(Long id) {
-        PersistObjectIdModifierDTO o = new PersistObjectIdModifierDTO();
-        o.setId(id);
-        orderDelegator.delete(o);
+        orderDelegator.delete(CommonUtil.deleteIdConvert(id));
     }
 
     public void insert(Order order) {
@@ -52,7 +47,7 @@ public class OrderMapper {
     public List<Order> pageOrder(SearchQueryDTO query) {
         QueryRequestVo q = CommonUtil.queryConvert(query);
         RDMPageVO p = CommonUtil.pageConvert(query);
-        List<OrderViewDTO> list = orderDelegator.find(q,p);
+        List<OrderViewDTO> list = orderDelegator.find(q, p);
         return CommonUtil.ListResConvert(list, Order.class);
     }
 }

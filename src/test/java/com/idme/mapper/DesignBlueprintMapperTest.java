@@ -15,6 +15,7 @@ import java.util.List;
 public class DesignBlueprintMapperTest {
     @Autowired
     DesignBlueprintMapper mapper;
+
     @Test
     void testInsert() {
         DesignBlueprint designBlueprint = DesignBlueprint.builder()
@@ -43,7 +44,7 @@ public class DesignBlueprintMapperTest {
     }
 
     @Test
-    void testPage(){
+    void testPage() {
         List<DesignBlueprint> list = mapper.pageDesignBlueprints(SearchQueryDTO.builder().page(1).pageSize(10).build());
         System.out.println(list);
     }

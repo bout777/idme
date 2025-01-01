@@ -1,7 +1,6 @@
 package com.idme.server.mapper;
 
 
-
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,7 +34,7 @@ public class PartMapper {
     @Autowired
     private PartDelegator partDelegator;
 
-    public void insert(Part part){
+    public void insert(Part part) {
         PartCreateDTO partCreateDTO = CommonUtil.resConvert(part, PartCreateDTO.class);
 
         partCreateDTO.setMaster(new PartMasterCreateDTO());
@@ -49,13 +48,13 @@ public class PartMapper {
         partDelegator.updateByAdmin(partUpdateDTO);
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         MasterIdModifierDTO obj = new MasterIdModifierDTO();
         obj.setMasterId(id);
         partDelegator.delete(obj);
     }
 
-    public List<Part> pagePart(SearchQueryDTO query){
+    public List<Part> pagePart(SearchQueryDTO query) {
         QueryRequestVo q = CommonUtil.queryConvert(query);
         RDMPageVO p = CommonUtil.pageConvert(query);
 
@@ -65,7 +64,7 @@ public class PartMapper {
         return res;
     }
 
-    public Long count(SearchQueryDTO query){
+    public Long count(SearchQueryDTO query) {
         return partDelegator.count(CommonUtil.queryConvert(query));
     }
 

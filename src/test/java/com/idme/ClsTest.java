@@ -23,16 +23,17 @@ public class ClsTest {
     private PartMapper partMapper;
     @Autowired
     JsonAttributeLayoutDelegator delegator;
+
     @Test
-    void t(){
+    void t() {
         List<PartClsDefinition> defs = mapper.getAllClsDefs();
         System.out.println(defs);
 
     }
 
     @Test
-    void partMapperTest(){
-        Part p= new Part();
+    void partMapperTest() {
+        Part p = new Part();
         p.setName("test3");
         List<Part.PartCls.PartAttr> attrs = new ArrayList<>();
         Part.PartCls cls = new Part.PartCls();
@@ -54,7 +55,7 @@ public class ClsTest {
     }
 
     @Test
-    void partMapperTest2(){
+    void partMapperTest2() {
         SearchQueryDTO q = new SearchQueryDTO();
         q.setPage(1);
         q.setPageSize(10);
@@ -63,7 +64,7 @@ public class ClsTest {
 
     @Test
     void partMapperTestUpdate() throws JsonProcessingException {
-        Part p= new Part();
+        Part p = new Part();
         p.setId(715311166712250368L);
         p.setName("test3");
         List<Part.PartCls.PartAttr> attrs = new ArrayList<>();
@@ -85,8 +86,7 @@ public class ClsTest {
     }
 
     @Test
-
-    void partMapperTestfuck(){
+    void partMapperTestfuck() {
         long count = delegator.count(new QueryRequestVo());
         System.out.println(count);
     }

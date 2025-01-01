@@ -1,28 +1,27 @@
 package com.idme.common.context;
 
+import com.huawei.innovation.rdm.intelligentrobotengineering.bean.enumerate.Authority;
+
 public class BaseContext {
 
-    public static ThreadLocal<Long> threadLocal = new ThreadLocal<>();
-    public static ThreadLocal<String> threadRole = new ThreadLocal<>();
+    public static ThreadLocal<Long> threadLocalId = new ThreadLocal<>();
+    public static ThreadLocal<Authority> threadLocalAuthority = new ThreadLocal<>();
 
-    public static void setCurrentId(Long id) {
-        threadLocal.set(id);
+    public static void setCurId(Long id) {
+        threadLocalId.set(id);
     }
 
-    public static Long getCurrentId() {
-        return threadLocal.get();
+    public static Long getCurId() {
+        return threadLocalId.get();
     }
 
-    public static void setCurrentRole(String role) {
-        threadRole.set(role);
+    public static void setCurAuthority(Authority authority) {
+        threadLocalAuthority.set(authority);
     }
 
-    public static String getCurrentRole() {
-        return threadRole.get();
+    public static Authority getCurAuthority() {
+        return threadLocalAuthority.get();
     }
 
-    public static void removeCurrentId() {
-        threadLocal.remove();
-    }
 
 }

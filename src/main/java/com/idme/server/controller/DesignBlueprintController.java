@@ -1,10 +1,11 @@
 package com.idme.server.controller;
 
-import com.huawei.iit.sdk.common.vo.file.UploadFileModelVO;
-import com.huawei.innovation.rdm.coresdk.basic.vo.RDMResultVO;
+import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdsModifierDTO;
+import com.huawei.innovation.rdm.coresdk.basic.vo.RDMParamVO;
 import com.huawei.innovation.rdm.delegate.service.FileDelegatorService;
 import com.huawei.innovation.rdm.delegate.service.XdmTokenService;
 import com.idme.common.result.Result;
+import com.idme.common.utils.CommonUtil;
 import com.idme.pojo.dto.DownloadQueryDTO;
 import com.idme.pojo.entity.DesignBlueprint;
 import com.idme.server.service.DesignBlueprintService;
@@ -17,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @RestController
 @RequestMapping("common")
-public class CommonController {
+public class DesignBlueprintController {
     @Value("${delegate.endpoint}")
     private String endpoint;
 
@@ -45,12 +46,20 @@ public class CommonController {
 
     @PostMapping("/download")
     public void downloadFile(@RequestBody DownloadQueryDTO downloadQuery, HttpServletResponse response) {
-        fileDelegatorService.downloadFile(downloadQuery.getFileId(),"DesignBlueprint","bluePrint",downloadQuery.getDesignBlueprintId(),appId,"0",response);
+        fileDelegatorService.downloadFile(downloadQuery.getFileId(), "DesignBlueprint", "bluePrint", downloadQuery.getDesignBlueprintId(), appId, "0", response);
     }
 
     @PostMapping("/upload")
-    public Result<DesignBlueprint.BluePrint> uploadFile(MultipartFile file,String DesignBlueprintId){
+    public Result<Long> uploadFile(MultipartFile file, String DesignBlueprintId) {
         DesignBlueprint.BluePrint bluePrint = designBlueprintService.uploadBluePrint(file, DesignBlueprintId);
-        return Result.success(bluePrint);
+        return Result.success(bluePrint.getId());
     }
+
+    @PostMapping("/deleteFile")
+    public Result<Long> deleteFile(Long id) {
+        designBlueprintService.deleteFile(id);
+        return Result.success();
+    }
+
+
 }

@@ -12,7 +12,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
 
-
 import java.util.List;
 
 /**
@@ -35,11 +34,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
         registry.addInterceptor(jwtTokenUserInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/user/login")
-                .excludePathPatterns("/user/register")
-                ;
-
-
+                .excludePathPatterns("/user/login");
     }
 
     protected void addCorsMappings(CorsRegistry registry) {

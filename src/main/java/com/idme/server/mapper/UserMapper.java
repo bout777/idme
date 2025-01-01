@@ -20,28 +20,25 @@ import java.util.List;
 
 @Component
 public class UserMapper {
-//    void insert(UserViewDTO);
+    //    void insert(UserViewDTO);
     @Autowired
     private UserDelegator userDelegator;
-    public User getById(Long id){
-        PersistObjectIdDecryptDTO persistObjectIdDecryptDTO = new PersistObjectIdDecryptDTO();
-        persistObjectIdDecryptDTO.setId(id);
-        UserViewDTO userView = userDelegator.get(persistObjectIdDecryptDTO);
-        User user = new User();
-        BeanUtils.copyProperties(userView, user);
+
+    public User getById(Long id) {
+        UserViewDTO userView = userDelegator.get(CommonUtil.fetchIdConvert(id));
+        User user = CommonUtil.resConvert(userView, User.class);
         return user;
     }
 
-    public User getByName(String name){
+    public User getByName(String name) {
         QueryRequestVo query = QueryRequestVo.build();
         query.addCondition("name", ConditionType.EQUAL, name);
-
-        List<UserViewDTO> res = userDelegator.find(query, new RDMPageVO(1, 10));
+        List<UserViewDTO> res = userDelegator.find(query, new RDMPageVO(1, 1));
         User user = CommonUtil.resConvert(res.get(0), User.class);
         return user;
     }
 
-    public List<User> pageUser(SearchQueryDTO query){
+    public List<User> pageUser(SearchQueryDTO query) {
         QueryRequestVo q = CommonUtil.queryConvert(query);
         RDMPageVO p = CommonUtil.pageConvert(query);
 
@@ -50,20 +47,22 @@ public class UserMapper {
         return CommonUtil.ListResConvert(list, User.class);
     }
 
-    public void insert(User user){
-        UserCreateDTO u = new UserCreateDTO();
-        BeanUtils.copyProperties(user, u);
+    public void insert(User user) {
+        UserCreateDTO u = CommonUtil.resConvert(user, UserCreateDTO.class);
         userDelegator.create(u);
     }
 
-    public void update(User user){
-        UserUpdateDTO u = new UserUpdateDTO();
-        BeanUtils.copyProperties(user, u);
+    public void update(User user) {
+        UserUpdateDTO u = CommonUtil.resConvert(user, UserUpdateDTO.class);
         userDelegator.update(u);
     }
 
-    public void delete(Long id){
-        PersistObjectIdModifierDTO obj = new PersistObjectIdModifierDTO(id,"");
-        userDelegator.delete(obj);
+    public void delete(Long id) {
+        userDelegator.delete(CommonUtil.deleteIdConvert(id));
+    }
+
+    public Long count(SearchQueryDTO query) {
+        QueryRequestVo q = CommonUtil.queryConvert(query);
+        return userDelegator.count(q);
     }
 }

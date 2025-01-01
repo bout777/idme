@@ -17,11 +17,12 @@ public class DesignBlueprint implements Serializable {
 
     private String blueprintDescription;
     private List<BluePrint> bluePrint;
+
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class BluePrint implements Serializable{
+    public static class BluePrint implements Serializable {
         private Long id;
         private String name;
     }
