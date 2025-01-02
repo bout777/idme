@@ -39,7 +39,8 @@ public class ProductMapper {
 
     public List<Product> pageProduct(SearchQueryDTO query) {
         QueryRequestVo q = QueryRequestVo.build();
-        q.addCondition("productName", ConditionType.LIKE, '%'+query.getName()+'%');
+        if(query.getName()!=null)
+            q.addCondition("productName", ConditionType.LIKE, query.getName());
 
         RDMPageVO p = CommonUtil.pageConvert(query);
         List<ProductViewDTO> productViews = productDelegator.find(q, p);
@@ -47,7 +48,10 @@ public class ProductMapper {
     }
 
     public Long count(SearchQueryDTO query) {
-        return productDelegator.count(CommonUtil.queryConvert(query));
+        QueryRequestVo q = QueryRequestVo.build();
+        if(query.getName()!=null)
+            q.addCondition("productName", ConditionType.LIKE, query.getName());
+        return productDelegator.count(q);
     }
 
     public void insert(Product product) {

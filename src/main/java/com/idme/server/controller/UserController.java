@@ -64,8 +64,8 @@ public class UserController {
         return Result.success(pageResult);
     }
 
-    @GetMapping("/getById/{id}")
-    public Result<User> getById(@PathVariable Long id) {
+    @GetMapping("/getById")
+    public Result<User> getById(@RequestParam Long id) {
         User user = userService.getById(id);
         return Result.success(user);
     }

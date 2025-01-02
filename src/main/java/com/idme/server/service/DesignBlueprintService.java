@@ -98,7 +98,7 @@ public class DesignBlueprintService {
         fileDelegatorService.batchDelete(paramVO);
     }
 
-    public PageResult pageDesignBlueprint(SearchQueryDTO query) {
+    public PageResult page(SearchQueryDTO query) {
         List<DesignBlueprint> record = designBlueprintMapper.pageDesignBlueprints(query);
         Long total = designBlueprintMapper.count(query);
 
@@ -106,6 +106,11 @@ public class DesignBlueprintService {
                 .total(total)
                 .records(record)
                 .build();
+    }
+
+    public List<DesignBlueprint> getByProductId(Long productId) {
+        List<Long> ids = productBlueprintLinkMapper.getByProductId(productId).stream().map(link-> link.getBlueprintId()).toList();
+        return designBlueprintMapper.getByIds(ids);
     }
 
     public void update(DesignBlueprint designBlueprint) {

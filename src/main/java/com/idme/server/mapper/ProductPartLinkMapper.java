@@ -28,6 +28,15 @@ public class ProductPartLinkMapper {
         linkDelegator.create(dto);
     }
 
+    public List<ProductPartLink> get(Long productId, Long partId) {
+        QueryRequestVo q = CommonUtil.linkQueryConvert(productId, partId);
+        RDMPageVO p = new RDMPageVO();
+        List<ProductPartLinkViewDTO> views= linkDelegator.find(q,p);
+        if (views == null)
+            return null;
+        List<ProductPartLink> res = views.stream().map(this::convert).toList();
+        return res;
+    }
     public void deleteByProductId(Long productId) {
         DeleteByConditionVo vo = new DeleteByConditionVo();
         QueryRequestVo q = QueryRequestVo.build();
@@ -42,6 +51,7 @@ public class ProductPartLinkMapper {
         q.addCondition(ColumnConstant.TARGET_ID, ConditionType.EQUAL, partId);
         linkDelegator.deleteByCondition(vo);
     }
+
 
     public List<ProductPartLink> getByProductId(Long productId) {
         QueryRequestVo q = QueryRequestVo.build();

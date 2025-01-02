@@ -6,6 +6,7 @@ import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
+import com.idme.common.constant.ColumnConstant;
 import com.idme.pojo.dto.SearchQueryDTO;
 import org.apache.commons.beanutils.BeanUtils;
 
@@ -18,7 +19,7 @@ public class CommonUtil {
         if (query.getId() != null)
             q.addCondition("id", ConditionType.EQUAL, query.getId());
         else if (query.getName() != null)
-            q.addCondition("name", ConditionType.LIKE, '%' + query.getName() + '%');
+            q.addCondition("name", ConditionType.LIKE, query.getName());
         return q;
     }
 
@@ -45,6 +46,17 @@ public class CommonUtil {
         ObjectReferenceParamDTO o = new ObjectReferenceParamDTO();
         o.setId(id);
         return o;
+    }
+
+    public static QueryRequestVo linkQueryConvert(Long sourceId, Long targetId){
+        QueryRequestVo q = QueryRequestVo.build();
+
+        if(sourceId != null)
+            q.addCondition(ColumnConstant.SOURCE_ID, ConditionType.EQUAL, sourceId);
+        q.and();
+        if(targetId != null)
+            q.addCondition(ColumnConstant.TARGET_ID, ConditionType.EQUAL, targetId);
+        return q;
     }
 
     public static <S, T> T resConvert(S source, Class<T> targetClazz) {

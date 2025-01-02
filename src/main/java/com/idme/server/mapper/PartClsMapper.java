@@ -44,10 +44,7 @@ public class PartClsMapper {
         //获取所有属性
         List<EXADefinitionViewDTO> list = exaDefinitionDelegator.find(q, p);
 
-//        HashMap<Long, String> clsMap = new HashMap<>();
-//        for (ClassificationNodeViewDTO c:cls){
-//            clsMap.put(c.getId(), c.getName());
-//        }
+
 
         //建立属性id->属性的映射
         HashMap<Long, PartAttrDefinition> attrMap = new HashMap<>();

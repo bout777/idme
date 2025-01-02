@@ -3,6 +3,7 @@ package com.idme.server.mapper;
 import com.huawei.innovation.rdm.bean.entity.XDMFileModel;
 import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
 import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
+import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
 import com.huawei.innovation.rdm.dto.entity.XDMFileModelViewDTO;
@@ -10,6 +11,7 @@ import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.DesignBlu
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.DesignBlueprintCreateDTO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.DesignBlueprintUpdateDTO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.DesignBlueprintViewDTO;
+import com.idme.common.constant.ColumnConstant;
 import com.idme.common.utils.CommonUtil;
 import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.DesignBlueprint;
@@ -67,13 +69,16 @@ public class DesignBlueprintMapper {
         QueryRequestVo q = CommonUtil.queryConvert(query);
         RDMPageVO p = CommonUtil.pageConvert(query);
         List<DesignBlueprintViewDTO> viewList = designBlueprintDelegator.find(q, p);
+        List<DesignBlueprint> resList = viewList.stream().map(this::convert).toList();
+        return resList;
+    }
 
-        List<DesignBlueprint> resList = viewList.stream().map(view -> DesignBlueprint.builder()
-                .id(view.getId())
-                .blueprintDescription(view.getBuleprintDescription())
-                .bluePrint(CommonUtil.ListResConvert(view.getBluePrint(), DesignBlueprint.BluePrint.class))
-                .build()).toList();
-
+    public List<DesignBlueprint> getByIds(List<Long> ids) {
+        QueryRequestVo q = new QueryRequestVo();
+        q.addCondition(ColumnConstant.ID, ConditionType.IN, ids);
+        RDMPageVO p = new RDMPageVO();
+        List<DesignBlueprintViewDTO> viewList = designBlueprintDelegator.find(q, p);
+        List<DesignBlueprint> resList = viewList.stream().map(this::convert).toList();
         return resList;
     }
 
@@ -82,6 +87,13 @@ public class DesignBlueprintMapper {
         return designBlueprintDelegator.count(q);
     }
 
+    private DesignBlueprint convert(DesignBlueprintViewDTO source) {
+        return DesignBlueprint.builder()
+                .id(source.getId())
+                .blueprintDescription(source.getBuleprintDescription())
+                .bluePrint(CommonUtil.ListResConvert(source.getBluePrint(), DesignBlueprint.BluePrint.class))
+                .build();
+    }
 
     private XDMFileModel convert(DesignBlueprint.BluePrint source) {
         XDMFileModel xdmFileModel = new XDMFileModel();

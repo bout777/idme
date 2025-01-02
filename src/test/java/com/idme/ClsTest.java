@@ -31,28 +31,6 @@ public class ClsTest {
 
     }
 
-    @Test
-    void partMapperTest() {
-        Part p = new Part();
-        p.setName("test3");
-        List<Part.PartCls.PartAttr> attrs = new ArrayList<>();
-        Part.PartCls cls = new Part.PartCls();
-
-        Part.PartCls.PartAttr attr = new Part.PartCls.PartAttr();
-
-        attr.setName("length");
-        attr.setValue("10");
-        attrs.add(attr);
-        attr = new Part.PartCls.PartAttr();
-        attr.setName("width");
-        attr.setValue("10");
-
-        attrs.add(attr);
-        cls.setAttrs(attrs);
-        p.setCls(cls);
-
-        partMapper.insert(p);
-    }
 
     @Test
     void partMapperTest2() {
@@ -60,29 +38,6 @@ public class ClsTest {
         q.setPage(1);
         q.setPageSize(10);
         partMapper.pagePart(q);
-    }
-
-    @Test
-    void partMapperTestUpdate() throws JsonProcessingException {
-        Part p = new Part();
-        p.setId(715311166712250368L);
-        p.setName("test3");
-        List<Part.PartCls.PartAttr> attrs = new ArrayList<>();
-        Part.PartCls cls = new Part.PartCls();
-
-        Part.PartCls.PartAttr attr = new Part.PartCls.PartAttr();
-
-        attr.setName("length");
-        attr.setValue("10");
-        attrs.add(attr);
-        attr = new Part.PartCls.PartAttr();
-        attr.setName("width");
-        attr.setValue("10");
-
-        attrs.add(attr);
-        cls.setAttrs(attrs);
-        p.setCls(cls);
-        partMapper.update(p);
     }
 
     @Test

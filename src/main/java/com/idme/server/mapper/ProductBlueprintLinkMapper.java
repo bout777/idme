@@ -7,9 +7,11 @@ import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.ProductBlueprintLinkDelegator;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.relation.ProductBlueprintLinkCreateDTO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.relation.ProductBlueprintLinkViewDTO;
+import com.huawei.innovation.rdm.intelligentrobotengineering.dto.relation.ProductPartLinkViewDTO;
 import com.idme.common.constant.ColumnConstant;
 import com.idme.common.utils.CommonUtil;
 import com.idme.pojo.relation.ProductBlueprintLink;
+import com.idme.pojo.relation.ProductPartLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,16 @@ public class ProductBlueprintLinkMapper {
     public void insert(Long productId, Long blueprintId) {
         ProductBlueprintLinkCreateDTO dto = convert(new ProductBlueprintLink(productId, blueprintId));
         linkDelegator.create(dto);
+    }
+
+    public List<ProductBlueprintLink>get(Long productId, Long blueprintId) {
+        QueryRequestVo q = CommonUtil.linkQueryConvert(productId, blueprintId);
+        RDMPageVO p = new RDMPageVO();
+        List<ProductBlueprintLinkViewDTO> views= linkDelegator.find(q,p);
+        if (views == null)
+            return null;
+        List<ProductBlueprintLink> res = views.stream().map(this::convert).toList();
+        return res;
     }
 
     public void deleteByProductId(Long productId) {

@@ -32,8 +32,8 @@ public class OrderController {
         return Result.success();
     }
 
-    @GetMapping("/getById/{id}")
-    Result<Order> getById(@PathVariable Long id) {
+    @GetMapping("/getById")
+    Result<Order> getById(@RequestParam Long id) {
         Order order= orderService.getById(id);
         return Result.success(order);
     }

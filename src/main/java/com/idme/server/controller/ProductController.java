@@ -39,8 +39,8 @@ public class ProductController {
         return Result.success(pageResult);
     }
 
-    @GetMapping("/getById/{id}")
-    Result<Product> getById(@PathVariable Long id) {
+    @GetMapping("/getById")
+    Result<Product> getById(@RequestParam Long id) {
         Product product = productService.getById(id);
         return Result.success(product);
     }
