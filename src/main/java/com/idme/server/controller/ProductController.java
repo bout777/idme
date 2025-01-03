@@ -28,7 +28,7 @@ public class ProductController {
     }
 
     @PostMapping("/delete")
-    Result delete(@RequestBody Long id) {
+    Result delete(@RequestParam Long id) {
         productService.delete(id);
         return Result.success();
     }

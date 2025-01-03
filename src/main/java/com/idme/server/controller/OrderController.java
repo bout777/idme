@@ -27,7 +27,7 @@ public class OrderController {
     }
 
     @PostMapping("/delete")
-    Result delete(@RequestBody Long id) {
+    Result delete(@RequestParam Long id) {
         orderService.delete(id);
         return Result.success();
     }

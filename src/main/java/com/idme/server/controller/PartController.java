@@ -39,7 +39,7 @@ public class PartController {
     }
 
     @PostMapping("/delete")
-    public Result delete(Long id) {
+    public Result delete(@RequestParam Long id) {
         partService.delete(id);
         return Result.success();
     }

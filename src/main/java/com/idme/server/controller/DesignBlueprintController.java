@@ -57,7 +57,7 @@ public class DesignBlueprintController {
     }
 
     @PostMapping("/delete")
-    public Result<Long> delete(Long id) {
+    public Result<Long> delete(@RequestParam Long id) {
         designBlueprintService.delete(id);
         return Result.success();
     }

@@ -22,6 +22,4 @@ public class BaseContext {
     public static Authority getCurAuthority() {
         return threadLocalAuthority.get();
     }
-
-
 }
