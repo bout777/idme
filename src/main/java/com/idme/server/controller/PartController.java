@@ -1,14 +1,11 @@
 package com.idme.server.controller;
 
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.PartDelegator;
-import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.PartUpdateByAdminDTO;
-import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.PartUpdateDTO;
 import com.idme.common.result.PageResult;
 import com.idme.common.result.Result;
 import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.Part;
 import com.idme.pojo.entity.PartClsDefinition;
-import com.idme.server.mapper.PartMapper;
 import com.idme.server.service.PartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +19,7 @@ public class PartController {
     PartDelegator partDelegator;
     @Autowired
     private PartService partService;
+
     @PostMapping("/update")
     public Result update(@RequestBody Part part) {
         partService.update(part);
@@ -29,7 +27,7 @@ public class PartController {
     }
 
     @GetMapping("/listClsDefs")
-    public Result<List<PartClsDefinition>> list(){
+    public Result<List<PartClsDefinition>> list() {
         List<PartClsDefinition> res = partService.listDefs();
         return Result.success(res);
     }

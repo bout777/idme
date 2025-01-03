@@ -1,10 +1,10 @@
 package com.idme.server.interceptor;
 
 import com.huawei.innovation.rdm.intelligentrobotengineering.bean.enumerate.Authority;
-import com.idme.common.context.BaseContext;
-import com.idme.common.utils.JwtUtil;
-import com.idme.common.properties.JwtProperties;
 import com.idme.common.constant.JwtConstant;
+import com.idme.common.context.BaseContext;
+import com.idme.common.properties.JwtProperties;
+import com.idme.common.utils.JwtUtil;
 import io.jsonwebtoken.Claims;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

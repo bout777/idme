@@ -1,25 +1,16 @@
 package com.idme;
 
-import com.huawei.innovation.rdm.bean.entity.ClassificationEXAValue;
-import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdsDecryptDTO;
-import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
-import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
-import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
-import com.huawei.innovation.rdm.intelligentrobotengineering.bean.enumerate.Authority;
-import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.UserCreateDTO;
-import com.huawei.innovation.rdm.xdm.delegator.*;
-import com.huawei.innovation.rdm.xdm.dto.entity.ClassificationNodeViewDTO;
-import com.huawei.innovation.rdm.xdm.dto.entity.EXADefinitionListViewDTO;
-import com.huawei.innovation.rdm.xdm.dto.entity.EXADefinitionViewDTO;
-import com.huawei.innovation.rdm.xdm.dto.relation.EXADefinitionLinkListViewDTO;
-import com.huawei.innovation.rdm.xdm.dto.relation.EXADefinitionLinkViewDTO;
+import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.UserDelegator;
+import com.huawei.innovation.rdm.xdm.delegator.ClassificationNodeDelegator;
+import com.huawei.innovation.rdm.xdm.delegator.ClassificationNodeRelatedByTypeDefinitionDelegator;
+import com.huawei.innovation.rdm.xdm.delegator.EXADefinitionDelegator;
+import com.huawei.innovation.rdm.xdm.delegator.EXADefinitionLinkDelegator;
 import com.idme.pojo.dto.SearchQueryDTO;
+import com.idme.pojo.entity.User;
 import com.idme.server.mapper.UserMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.UserDelegator;
-import com.idme.pojo.entity.User;
 
 import java.util.List;
 

@@ -2,14 +2,12 @@ package com.idme.server.service;
 
 import com.huawei.iit.sdk.common.vo.file.UploadFileModelVO;
 import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdsModifierDTO;
-import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMParamVO;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMResultVO;
 import com.huawei.innovation.rdm.delegate.service.FileDelegatorService;
 import com.idme.common.constant.MessageConstant;
 import com.idme.common.exception.BaseException;
 import com.idme.common.result.PageResult;
-import com.idme.common.result.Result;
 import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.DesignBlueprint;
 import com.idme.pojo.relation.ProductBlueprintLink;
@@ -83,14 +81,14 @@ public class DesignBlueprintService {
             throw new BaseException(MessageConstant.CANNOT_DELETE);
         DesignBlueprint b = designBlueprintMapper.getById(id);
         List<DesignBlueprint.BluePrint> list = b.getBluePrint();
-        list.forEach(item-> deleteFile(item.getId()));
+        list.forEach(item -> deleteFile(item.getId()));
         designBlueprintMapper.delete(id);
     }
 
-    public void deleteFile(Long id){
+    public void deleteFile(Long id) {
         RDMParamVO<PersistObjectIdsModifierDTO> paramVO = new RDMParamVO<>();
         PersistObjectIdsModifierDTO ids = new PersistObjectIdsModifierDTO();
-        List<Long>list = new ArrayList<>();
+        List<Long> list = new ArrayList<>();
         list.add(id);
         ids.setIds(list);
         paramVO.setParams(ids);
@@ -109,7 +107,7 @@ public class DesignBlueprintService {
     }
 
     public List<DesignBlueprint> getByProductId(Long productId) {
-        List<Long> ids = productBlueprintLinkMapper.getByProductId(productId).stream().map(link-> link.getBlueprintId()).toList();
+        List<Long> ids = productBlueprintLinkMapper.getByProductId(productId).stream().map(link -> link.getBlueprintId()).toList();
         return designBlueprintMapper.getByIds(ids);
     }
 

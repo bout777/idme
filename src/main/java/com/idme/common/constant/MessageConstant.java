@@ -8,4 +8,5 @@ public class MessageConstant {
     public static final String INSUFFICIENT_PERMISSION = "权限不足";
     public static final String USER_NOT_EXIST = "用户不存在";
     public static final String PRODUCT_NOT_EXIST = "产品不存在";
+    public static final String ILLEGAL_INPUT = "存在非法的输入";
 }

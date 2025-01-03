@@ -4,12 +4,13 @@ import com.idme.common.constant.MessageConstant;
 import com.idme.common.exception.BaseException;
 import com.idme.common.result.PageResult;
 import com.idme.pojo.dto.SearchQueryDTO;
-import com.idme.pojo.entity.DesignBlueprint;
 import com.idme.pojo.entity.Part;
 import com.idme.pojo.entity.PartClsDefinition;
-import com.idme.pojo.relation.ProductBlueprintLink;
 import com.idme.pojo.relation.ProductPartLink;
-import com.idme.server.mapper.*;
+import com.idme.server.mapper.PartClsMapper;
+import com.idme.server.mapper.PartMapper;
+import com.idme.server.mapper.ProductBlueprintLinkMapper;
+import com.idme.server.mapper.ProductPartLinkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,18 @@ public class PartService {
     private ProductBlueprintLinkMapper blueprintLinkMapper;
 
     public void insert(Part part) {
+        if (part.getDescription().indexOf('$') >= 0)
+            throw new BaseException(MessageConstant.ILLEGAL_INPUT);
         partMapper.insert(part);
     }
 
     public void update(Part part) {
+        if (part.getDescription().indexOf('$') >= 0)
+            throw new BaseException(MessageConstant.ILLEGAL_INPUT);
         partMapper.update(part);
     }
 
-    public PageResult page(SearchQueryDTO query){
+    public PageResult page(SearchQueryDTO query) {
         List<Part> list = partMapper.pagePart(query);
         Long total = partMapper.count(query);
         return PageResult.builder()
@@ -43,7 +48,7 @@ public class PartService {
                 .build();
     }
 
-    public void delete(Long id){
+    public void delete(Long id) {
         List<ProductPartLink> links = partLinkMapper.get(null, id);
         // 判断该零件是否被产品关联
         if (links != null && !links.isEmpty())
@@ -51,7 +56,7 @@ public class PartService {
         partMapper.delete(id);
     }
 
-    public List<PartClsDefinition> listDefs(){
+    public List<PartClsDefinition> listDefs() {
         return partClsMapper.getAllClsDefs();
     }
 

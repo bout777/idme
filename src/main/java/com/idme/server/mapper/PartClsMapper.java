@@ -7,11 +7,9 @@ import com.huawei.innovation.rdm.xdm.delegator.EXADefinitionDelegator;
 import com.huawei.innovation.rdm.xdm.delegator.EXADefinitionLinkDelegator;
 import com.huawei.innovation.rdm.xdm.dto.entity.ClassificationNodeViewDTO;
 import com.huawei.innovation.rdm.xdm.dto.entity.EXADefinitionViewDTO;
-import com.huawei.innovation.rdm.xdm.dto.relation.EXADefinitionLinkListViewDTO;
 import com.huawei.innovation.rdm.xdm.dto.relation.EXADefinitionLinkViewDTO;
 import com.idme.pojo.entity.PartAttrDefinition;
 import com.idme.pojo.entity.PartClsDefinition;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +41,6 @@ public class PartClsMapper {
         List<EXADefinitionLinkViewDTO> linkList = exaDefinitionLinkDelegator.find(q, p);
         //获取所有属性
         List<EXADefinitionViewDTO> list = exaDefinitionDelegator.find(q, p);
-
 
 
         //建立属性id->属性的映射

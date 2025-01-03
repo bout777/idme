@@ -3,7 +3,6 @@ package com.idme.mapper;
 import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.DesignBlueprint;
 import com.idme.server.mapper.DesignBlueprintMapper;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

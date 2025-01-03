@@ -1,6 +1,5 @@
 package com.idme.server.mapper;
 
-import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
 import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
@@ -26,20 +25,21 @@ public class ProductMapper {
         ProductViewDTO productView = productDelegator.get(CommonUtil.fetchIdConvert(id));
         return CommonUtil.resConvert(productView, Product.class);
     }
-    public Product getByName(String name){
+
+    public Product getByName(String name) {
         QueryRequestVo q = QueryRequestVo.build();
         q.addCondition("productName", ConditionType.EQUAL, name);
 
         RDMPageVO p = new RDMPageVO();
         List<ProductViewDTO> views = productDelegator.find(q, p);
-        if(views==null||views.isEmpty())
+        if (views == null || views.isEmpty())
             return null;
         return CommonUtil.resConvert(views.get(0), Product.class);
     }
 
     public List<Product> pageProduct(SearchQueryDTO query) {
         QueryRequestVo q = QueryRequestVo.build();
-        if(query.getName()!=null)
+        if (query.getName() != null)
             q.addCondition("productName", ConditionType.LIKE, query.getName());
 
         RDMPageVO p = CommonUtil.pageConvert(query);
@@ -49,7 +49,7 @@ public class ProductMapper {
 
     public Long count(SearchQueryDTO query) {
         QueryRequestVo q = QueryRequestVo.build();
-        if(query.getName()!=null)
+        if (query.getName() != null)
             q.addCondition("productName", ConditionType.LIKE, query.getName());
         return productDelegator.count(q);
     }

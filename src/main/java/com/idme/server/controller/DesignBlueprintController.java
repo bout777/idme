@@ -19,7 +19,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("blueprint")
+@RequestMapping("/blueprint")
 public class DesignBlueprintController {
     @Value("${delegate.endpoint}")
     private String endpoint;

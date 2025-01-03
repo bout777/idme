@@ -48,13 +48,13 @@ public class CommonUtil {
         return o;
     }
 
-    public static QueryRequestVo linkQueryConvert(Long sourceId, Long targetId){
+    public static QueryRequestVo linkQueryConvert(Long sourceId, Long targetId) {
         QueryRequestVo q = QueryRequestVo.build();
 
-        if(sourceId != null)
+        if (sourceId != null)
             q.addCondition(ColumnConstant.SOURCE_ID, ConditionType.EQUAL, sourceId);
         q.and();
-        if(targetId != null)
+        if (targetId != null)
             q.addCondition(ColumnConstant.TARGET_ID, ConditionType.EQUAL, targetId);
         return q;
     }

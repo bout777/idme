@@ -1,7 +1,5 @@
 package com.idme.server.mapper;
 
-import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
-import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.OrderDelegator;

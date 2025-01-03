@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User  implements Serializable {
+public class User implements Serializable {
     Long id;
     Authority authority;
     String name;

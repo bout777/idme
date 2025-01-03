@@ -4,7 +4,6 @@
 
 package com.idme.server.controller;
 
-import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.UserViewDTO;
 import com.idme.common.constant.JwtConstant;
 import com.idme.common.properties.JwtProperties;
 import com.idme.common.result.PageResult;

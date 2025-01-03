@@ -1,14 +1,13 @@
 package com.idme.server.service;
 
-import com.idme.common.exception.BaseException;
 import com.idme.common.constant.MessageConstant;
+import com.idme.common.exception.BaseException;
 import com.idme.common.result.PageResult;
 import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.Order;
 import com.idme.pojo.entity.Product;
 import com.idme.server.mapper.OrderMapper;
 import com.idme.server.mapper.ProductMapper;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +24,7 @@ public class OrderService {
     public void insert(Order order) {
         String ProductName = order.getName();
         Product product = productMapper.getByName(ProductName);
-        if(product == null)
+        if (product == null)
             throw new BaseException(MessageConstant.PRODUCT_NOT_EXIST);
         orderMapper.insert(order);
     }
@@ -33,7 +32,7 @@ public class OrderService {
     public void update(Order order) {
         String ProductName = order.getName();
         Product product = productMapper.getByName(ProductName);
-        if(product == null)
+        if (product == null)
             throw new BaseException(MessageConstant.PRODUCT_NOT_EXIST);
         orderMapper.update(order);
     }

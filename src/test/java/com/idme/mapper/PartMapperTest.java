@@ -5,7 +5,6 @@ import com.idme.server.mapper.PartMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +13,7 @@ import java.util.List;
 public class PartMapperTest {
     @Autowired
     private PartMapper partMapper;
+
     @Test
     void test() {
         List<Part.PartAttr> list = new ArrayList<>();

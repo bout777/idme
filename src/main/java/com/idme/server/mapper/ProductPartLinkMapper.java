@@ -5,17 +5,14 @@ import com.huawei.innovation.rdm.coresdk.basic.vo.DeleteByConditionVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.delegator.ProductPartLinkDelegator;
-import com.huawei.innovation.rdm.intelligentrobotengineering.dto.relation.ProductBlueprintLinkViewDTO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.relation.ProductPartLinkCreateDTO;
 import com.huawei.innovation.rdm.intelligentrobotengineering.dto.relation.ProductPartLinkViewDTO;
 import com.idme.common.constant.ColumnConstant;
 import com.idme.common.utils.CommonUtil;
-import com.idme.pojo.relation.ProductBlueprintLink;
 import com.idme.pojo.relation.ProductPartLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -31,12 +28,13 @@ public class ProductPartLinkMapper {
     public List<ProductPartLink> get(Long productId, Long partId) {
         QueryRequestVo q = CommonUtil.linkQueryConvert(productId, partId);
         RDMPageVO p = new RDMPageVO();
-        List<ProductPartLinkViewDTO> views= linkDelegator.find(q,p);
+        List<ProductPartLinkViewDTO> views = linkDelegator.find(q, p);
         if (views == null)
             return null;
         List<ProductPartLink> res = views.stream().map(this::convert).toList();
         return res;
     }
+
     public void deleteByProductId(Long productId) {
         DeleteByConditionVo vo = new DeleteByConditionVo();
         QueryRequestVo q = QueryRequestVo.build();

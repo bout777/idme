@@ -6,7 +6,6 @@ import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.Order;
 import com.idme.server.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+
     @PostMapping("/insert")
     Result insert(@RequestBody Order order) {
         orderService.insert(order);
@@ -34,7 +34,7 @@ public class OrderController {
 
     @GetMapping("/getById")
     Result<Order> getById(@RequestParam Long id) {
-        Order order= orderService.getById(id);
+        Order order = orderService.getById(id);
         return Result.success(order);
     }
 
@@ -43,7 +43,6 @@ public class OrderController {
         PageResult pageResult = orderService.page(query);
         return Result.success(pageResult);
     }
-
 
 
 }

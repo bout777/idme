@@ -1,7 +1,5 @@
 package com.idme.server.mapper;
 
-import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdDecryptDTO;
-import com.huawei.innovation.rdm.coresdk.basic.dto.PersistObjectIdModifierDTO;
 import com.huawei.innovation.rdm.coresdk.basic.enums.ConditionType;
 import com.huawei.innovation.rdm.coresdk.basic.vo.QueryRequestVo;
 import com.huawei.innovation.rdm.coresdk.basic.vo.RDMPageVO;
@@ -12,7 +10,6 @@ import com.huawei.innovation.rdm.intelligentrobotengineering.dto.entity.UserView
 import com.idme.common.utils.CommonUtil;
 import com.idme.pojo.dto.SearchQueryDTO;
 import com.idme.pojo.entity.User;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +31,8 @@ public class UserMapper {
         QueryRequestVo query = QueryRequestVo.build();
         query.addCondition("name", ConditionType.EQUAL, name);
         List<UserViewDTO> res = userDelegator.find(query, new RDMPageVO(1, 1));
+        if (res == null || res.isEmpty())
+            return null;
         User user = CommonUtil.resConvert(res.get(0), User.class);
         return user;
     }
